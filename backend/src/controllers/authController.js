@@ -116,4 +116,37 @@ const setTokenCookies = (res, { accessToken, refreshToken }) => {
   });
 };
 
-export { login, register };
+
+const refresh = async (req, res) => {
+  try {
+    const token = req.cookies.refreshToken;
+
+    if (!token) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+
+    const user = await User.findById(decoded.id);
+
+    if (!user || user.refreshToken !== token) {
+      return res.status(403).json({ message: "Invalid refresh token" });
+    }
+
+    const tokens = createTokens(user);
+
+    user.refreshToken = tokens.refreshToken;
+    await user.save();
+
+    setTokenCookies(res, tokens);
+
+    res.status(200).json({
+      accessToken: tokens.accessToken,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(403).json({ message: "Failed to refresh token" });
+  }
+};
+
+export { login, register, refresh };

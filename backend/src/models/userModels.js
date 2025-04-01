@@ -41,7 +41,9 @@ const User = {
   // WARN: TESTING PURPOSES ONLY.
   // This should never exists like so!
   getUsers() {
-    return users;
+    console.log('Hello users')
+   return [...users]
+    // return users;
   },
 };
 
