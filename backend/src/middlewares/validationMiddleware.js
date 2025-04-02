@@ -7,7 +7,7 @@ const validateRegister = (req, res, next) => {
   // !username
   // !password
   // !email
-  if(!username || !password || !email){
+  if (!username || !password || !email) {
     return res.status(400).json({ message: "bad request" });
   }
 
@@ -19,7 +19,9 @@ const validateRegister = (req, res, next) => {
   // - Check if username contains invalid characters
 
   if (password.length < 6) {
-    return res.status(400).json({ message: "Password must be at least 6 characters long" });
+    return res
+      .status(400)
+      .json({ message: "Password must be at least 6 characters long" });
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,9 +31,12 @@ const validateRegister = (req, res, next) => {
 
   const usernameRegex = /^[a-zA-Z0-9_]+$/;
   if (!usernameRegex.test(username)) {
-    return res.status(400).json({ message: "Username can only contain letters, numbers, and underscores" });
+    return res
+      .status(400)
+      .json({
+        message: "Username can only contain letters, numbers, and underscores",
+      });
   }
-
 
   // TODO:
   // Req.body sanitation
@@ -48,6 +53,7 @@ const validateRegister = (req, res, next) => {
 const validateLogin = (req, res, next) => {
   const { username, password } = req.body;
 
+  console.log("login req.body", req.body);
   //TODO: Complete the validateLogin
 
   // NOTE: Lines you may use to check if the req.body is complete.
@@ -58,8 +64,10 @@ const validateLogin = (req, res, next) => {
   //   .status(400)
   //   .json({ message: "Please provide username and password" });
 
-  if( !username || !password){
-    return res.status(400).json({ message: "Please provide username and password" });
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide username and password" });
   }
 
   // checking for more complex validation logic here like
