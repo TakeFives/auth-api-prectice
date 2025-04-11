@@ -27,7 +27,7 @@ console.log(allowedOrigins);
 // becuse URL would change in development and PRODUCTION or when live!
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     credentials: true,
   }),
 );

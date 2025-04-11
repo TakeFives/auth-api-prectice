@@ -36,10 +36,11 @@ const login = async (req, res) => {
   try {
     const { username, password: potentialUserPassword } = req.body;
 
+    console.log("Login request received with body: ", username, potentialUserPassword);
     // NOTE: We are mocking up a database with an arry in models. Later
     // when MongoDB is setup, this should be an async function
     // await User.findOne();
-    const user = User.findOne({ username });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(401).json({
@@ -115,7 +116,6 @@ const setTokenCookies = (res, { accessToken, refreshToken }) => {
     maxAge: refreshTokenRefreshExpiresMS,
   });
 };
-
 
 const refresh = async (req, res) => {
   try {
